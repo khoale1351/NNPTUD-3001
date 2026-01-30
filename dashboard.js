@@ -9,12 +9,32 @@ let pageSize = 10;
 let priceAsc = true;
 let titleAsc = true;
 
+const loadingEl = document.getElementById("loading");
+
 // ================= GET ALL =================
 async function getAllProducts() {
-    const res = await fetch(API_URL);
-    products = await res.json();
-    filteredProducts = [...products];
-    render();
+    showLoading(true);
+
+    try {
+        const res = await fetch(API_URL);
+        products = await res.json();
+
+        // Fix lỗi dữ liệu: đảm bảo images tồn tại
+        products = products.map(p => ({
+            ...p,
+            image: Array.isArray(p.images) && p.images.length > 0
+                ? p.images[0]
+                : ""
+        }));
+
+        filteredProducts = [...products];
+        render();
+    } catch (err) {
+        alert("Lỗi khi tải dữ liệu");
+        console.error(err);
+    } finally {
+        showLoading(false);
+    }
 }
 
 getAllProducts();
@@ -39,25 +59,32 @@ function renderTable() {
             <tr>
                 <td>${p.id}</td>
                 <td>
-                    <img src="${p.images[0]}" alt="${p.title}">
+                    <img src="${p.image}" alt="${p.title}">
                 </td>
                 <td>${p.title}</td>
+                <td>${p.category?.name || ""}</td>
                 <td>${p.price}</td>
             </tr>
         `;
     });
 }
 
-// ================= SEARCH =================
+// ================= DEBOUNCE SEARCH =================
+let searchTimeout = null;
+
 document.getElementById("searchInput").addEventListener("input", function () {
-    const keyword = this.value.toLowerCase();
+    clearTimeout(searchTimeout);
 
-    filteredProducts = products.filter(p =>
-        p.title.toLowerCase().includes(keyword)
-    );
+    searchTimeout = setTimeout(() => {
+        const keyword = this.value.toLowerCase();
 
-    currentPage = 1;
-    render();
+        filteredProducts = products.filter(p =>
+            p.title.toLowerCase().includes(keyword)
+        );
+
+        currentPage = 1;
+        render();
+    }, 400); // debounce 400ms
 });
 
 // ================= PAGE SIZE =================
@@ -87,7 +114,7 @@ function renderPagination() {
 
 function goToPage(page) {
     currentPage = page;
-    renderTable();
+    render();
 }
 
 // ================= SORT =================
@@ -107,4 +134,9 @@ function sortByTitle() {
     );
     titleAsc = !titleAsc;
     renderTable();
+}
+
+// ================= LOADING =================
+function showLoading(show) {
+    loadingEl.classList.toggle("hidden", !show);
 }
