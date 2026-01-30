@@ -2,45 +2,58 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Products</title>
+    <title>Product Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Quản lý sản phẩm</h2>
+<div class="dashboard">
+    <h1>📦 Product Management</h1>
 
-<div class="controls">
-    <input 
-        type="text" 
-        id="searchInput" 
-        placeholder="Tìm theo title..."
-    >
+    <div class="toolbar">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Tìm kiếm theo title..."
+        >
 
-    <select id="pageSize">
-        <option value="5">5 / trang</option>
-        <option value="10" selected>10 / trang</option>
-        <option value="20">20 / trang</option>
-    </select>
+        <select id="pageSize">
+            <option value="5">5 / trang</option>
+            <option value="10" selected>10 / trang</option>
+            <option value="20">20 / trang</option>
+        </select>
 
-    <button onclick="sortByPrice()">Giá ↑↓</button>
-    <button onclick="sortByTitle()">Tên ↑↓</button>
+        <button onclick="sortByPrice()">💲 Giá ↑↓</button>
+        <button onclick="sortByTitle()">🔤 Tên ↑↓</button>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Đang tải dữ liệu...</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <td>
+                    <img 
+                        src="${p.image}" 
+                        alt="${p.title}"
+                        onerror="this.onerror=null;this.src='https://via.placeholder.com/100?text=No+Image';"
+                    >
+                </td>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price ($)</th>
+            </tr>
+        </thead>
+        <tbody id="productBody"></tbody>
+    </table>
+
+    <div id="pagination" class="pagination"></div>
 </div>
-
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Ảnh</th>
-            <th>Title</th>
-            <th>Price ($)</th>
-        </tr>
-    </thead>
-    <tbody id="productBody">
-        <!-- render bằng JS -->
-    </tbody>
-</table>
-
-<div class="pagination" id="pagination"></div>
 
 <script src="dashboard.js"></script>
 </body>

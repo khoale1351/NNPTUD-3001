@@ -1,12 +1,51 @@
-body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
+* {
+    box-sizing: border-box;
 }
 
-.controls {
-    margin-bottom: 15px;
+body {
+    margin: 0;
+    background: #f4f6f8;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.dashboard {
+    max-width: 1200px;
+    margin: 30px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.toolbar {
     display: flex;
-    gap: 10px;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.toolbar input,
+.toolbar select {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    min-width: 200px;
+}
+
+.toolbar button {
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+}
+
+.toolbar button:hover {
+    background: #1e40af;
 }
 
 table {
@@ -15,43 +54,73 @@ table {
 }
 
 thead {
-    background: #333;
+    background: #111827;
     color: white;
 }
 
 th, td {
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
     text-align: center;
 }
 
 /* 1 dòng đen – 1 dòng trắng */
 tbody tr:nth-child(odd) {
-    background-color: #f9f9f9;
+    background: #ffffff;
 }
 
 tbody tr:nth-child(even) {
-    background-color: #e6e6e6;
+    background: #f9fafb;
 }
 
-/* Hiển thị toàn bộ hình */
 td img {
     width: 100px;
     height: 100px;
     object-fit: contain;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
 }
 
 .pagination {
-    margin-top: 15px;
+    margin-top: 20px;
+    text-align: center;
 }
 
 .pagination button {
-    margin: 0 3px;
-    padding: 5px 10px;
+    margin: 0 4px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: white;
     cursor: pointer;
 }
 
 .pagination button.active {
-    background: #333;
+    background: #2563eb;
     color: white;
+}
+
+/* Loading */
+.loading {
+    text-align: center;
+    padding: 30px;
+}
+
+.hidden {
+    display: none;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #ddd;
+    border-top: 4px solid #2563eb;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
