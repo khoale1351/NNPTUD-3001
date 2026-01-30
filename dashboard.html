@@ -37,19 +37,15 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <td>
-                    <img 
-                        src="${p.image}" 
-                        alt="${p.title}"
-                        onerror="this.onerror=null;this.src='https://via.placeholder.com/100?text=No+Image';"
-                    >
-                </td>
+                <th>Image</th>
                 <th>Title</th>
                 <th>Category</th>
                 <th>Price ($)</th>
             </tr>
         </thead>
-        <tbody id="productBody"></tbody>
+        <tbody id="productBody">
+            <!-- render bằng JS -->
+        </tbody>
     </table>
 
     <div id="pagination" class="pagination"></div>
