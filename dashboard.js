@@ -17,21 +17,22 @@ async function getAllProducts() {
 
     try {
         const res = await fetch(API_URL);
-        products = await res.json();
+        const data = await res.json();
 
-        // Fix lỗi dữ liệu: đảm bảo images tồn tại
-        products = products.map(p => ({
+        products = data.map(p => ({
             ...p,
-            image: Array.isArray(p.images) && p.images.length > 0
-                ? p.images[0]
-                : ""
+            image:
+                Array.isArray(p.images) && p.images.length > 0
+                    ? p.images[0]
+                    : ""
         }));
 
         filteredProducts = [...products];
+        currentPage = 1;
         render();
     } catch (err) {
-        alert("Lỗi khi tải dữ liệu");
         console.error(err);
+        alert("Lỗi khi tải dữ liệu");
     } finally {
         showLoading(false);
     }
@@ -52,16 +53,23 @@ function renderTable() {
     const start = (currentPage - 1) * pageSize;
     const end = start + pageSize;
 
-    const pageData = filteredProducts.slice(start, end);
-
-    pageData.forEach(p => {
+    filteredProducts.slice(start, end).forEach(p => {
         tbody.innerHTML += `
             <tr>
                 <td>${p.id}</td>
                 <td>
-                    <img src="${p.image}" alt="${p.title}">
+                    <img
+                        src="${p.image}"
+                        alt="${p.title}"
+                        referrerpolicy="no-referrer"
+                        onerror="this.onerror=null;this.src='https://placehold.co/100x100?text=No+Image';"
+                    >
                 </td>
-                <td>${p.title}</td>
+                <td class="title">
+                    <div class="title-text" title="${p.title}">
+                        ${p.title}
+                    </div>
+                </td>
                 <td>${p.category?.name || ""}</td>
                 <td>${p.price}</td>
             </tr>
@@ -76,7 +84,7 @@ document.getElementById("searchInput").addEventListener("input", function () {
     clearTimeout(searchTimeout);
 
     searchTimeout = setTimeout(() => {
-        const keyword = this.value.toLowerCase();
+        const keyword = this.value.trim().toLowerCase();
 
         filteredProducts = products.filter(p =>
             p.title.toLowerCase().includes(keyword)
@@ -84,12 +92,12 @@ document.getElementById("searchInput").addEventListener("input", function () {
 
         currentPage = 1;
         render();
-    }, 400); // debounce 400ms
+    }, 400);
 });
 
 // ================= PAGE SIZE =================
 document.getElementById("pageSize").addEventListener("change", function () {
-    pageSize = +this.value;
+    pageSize = Number(this.value);
     currentPage = 1;
     render();
 });
@@ -100,9 +108,11 @@ function renderPagination() {
     const pagination = document.getElementById("pagination");
     pagination.innerHTML = "";
 
+    if (totalPages <= 1) return;
+
     for (let i = 1; i <= totalPages; i++) {
         pagination.innerHTML += `
-            <button 
+            <button
                 class="${i === currentPage ? "active" : ""}"
                 onclick="goToPage(${i})"
             >
@@ -123,7 +133,8 @@ function sortByPrice() {
         priceAsc ? a.price - b.price : b.price - a.price
     );
     priceAsc = !priceAsc;
-    renderTable();
+    currentPage = 1;
+    render();
 }
 
 function sortByTitle() {
@@ -133,7 +144,8 @@ function sortByTitle() {
             : b.title.localeCompare(a.title)
     );
     titleAsc = !titleAsc;
-    renderTable();
+    currentPage = 1;
+    render();
 }
 
 // ================= LOADING =================

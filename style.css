@@ -64,7 +64,7 @@ th, td {
     text-align: center;
 }
 
-/* 1 dòng đen – 1 dòng trắng */
+/* zebra rows */
 tbody tr:nth-child(odd) {
     background: #ffffff;
 }
@@ -80,6 +80,21 @@ td img {
     background: #fff;
     border-radius: 8px;
     border: 1px solid #e5e7eb;
+}
+
+td {
+    vertical-align: middle;
+}
+
+td.title {
+    max-width: 280px;
+}
+
+.title-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .pagination {
@@ -122,5 +137,7 @@ td img {
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
