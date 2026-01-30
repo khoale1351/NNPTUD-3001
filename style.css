@@ -82,9 +82,15 @@ td img {
     border: 1px solid #e5e7eb;
 }
 
-/* title không kéo cao dòng */
+td {
+    vertical-align: middle;
+}
+
 td.title {
     max-width: 280px;
+}
+
+.title-text {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;

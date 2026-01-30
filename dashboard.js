@@ -65,8 +65,10 @@ function renderTable() {
                         onerror="this.onerror=null;this.src='https://placehold.co/100x100?text=No+Image';"
                     >
                 </td>
-                <td class="title" title="${p.title}">
-                    ${p.title}
+                <td class="title">
+                    <div class="title-text" title="${p.title}">
+                        ${p.title}
+                    </div>
                 </td>
                 <td>${p.category?.name || ""}</td>
                 <td>${p.price}</td>
