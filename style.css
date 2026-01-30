@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.controls {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #333;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+/* 1 dòng đen – 1 dòng trắng */
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #e6e6e6;
+}
+
+/* Hiển thị toàn bộ hình */
+td img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.pagination {
+    margin-top: 15px;
+}
+
+.pagination button {
+    margin: 0 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background: #333;
+    color: white;
+}

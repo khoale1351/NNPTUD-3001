@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Products</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Quản lý sản phẩm</h2>
+
+<div class="controls">
+    <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Tìm theo title..."
+    >
+
+    <select id="pageSize">
+        <option value="5">5 / trang</option>
+        <option value="10" selected>10 / trang</option>
+        <option value="20">20 / trang</option>
+    </select>
+
+    <button onclick="sortByPrice()">Giá ↑↓</button>
+    <button onclick="sortByTitle()">Tên ↑↓</button>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ảnh</th>
+            <th>Title</th>
+            <th>Price ($)</th>
+        </tr>
+    </thead>
+    <tbody id="productBody">
+        <!-- render bằng JS -->
+    </tbody>
+</table>
+
+<div class="pagination" id="pagination"></div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
